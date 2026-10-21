@@ -192,21 +192,23 @@ dg /path/to/project "add tests" # start with a prompt
 
 ### MiniMax
 
-Set `MINIMAX_API_KEY`, then select either supported model: `MiniMax-M3` or
-`MiniMax-M2.7`. The `minimax` alias uses `MiniMax-M3`.
+With the Bash launchers, set `MINIMAX_API_KEY`, then select
+`MiniMax-M3.1-Flash` (the `minimax` default) or `MiniMax-M3`.
 
 ```bash
 export MINIMAX_API_KEY="your-api-key"
 dg --model=minimax /path/to/project
+dg --model=minimax-m3.1-flash /path/to/project
 dg --model=minimax-m3 /path/to/project
-dg --model=minimax-m2.7 /path/to/project
 ```
 
 `MINIMAX_REGION` selects the endpoint region and defaults to `global_en`.
 `MINIMAX_API_MODE` selects the compatible API mode and defaults to `openai`;
-set it to `anthropic` to use the Anthropic-compatible endpoint. The launcher
-uses a 1,000,000-token context window for `MiniMax-M3` and a 204,800-token
-context window for `MiniMax-M2.7`.
+set it to `anthropic` to use the Anthropic-compatible endpoint. Both current
+models use a 1,000,000-token context window. Explicit legacy selections
+`--model=minimax-m2.7` and `--model=MiniMax-M2.7` remain available with their
+204,800-token context window; existing saved or custom model arguments are
+not rewritten. Native PowerShell launchers do not implement this routing.
 
 | Region | OpenAI-compatible base URL | Anthropic-compatible base URL |
 |--------|----------------------------|-------------------------------|
@@ -215,7 +217,7 @@ context window for `MiniMax-M2.7`.
 
 ```bash
 MINIMAX_REGION=cn_zh dg --model=minimax-m3 /path/to/project
-MINIMAX_API_MODE=anthropic dgc --model=minimax-m2.7 /path/to/project
+MINIMAX_API_MODE=anthropic dgc --model=minimax-m3.1-flash /path/to/project
 ```
 
 ### Interactive Picker (new in v3.9.99)
