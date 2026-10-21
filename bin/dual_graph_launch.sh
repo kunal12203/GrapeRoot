@@ -223,7 +223,8 @@ _FILTERED=()
 for _fa in "$@"; do
   case "$_fa" in
     --model=codex|--model=local|--model=ollama|--model=gemini|--model=opencode|\
-    --model=antigravity|--model=openclaw|--model=minimax|--model=minimax-m3|\
+    --model=antigravity|--model=openclaw|--model=minimax|\
+    --model=minimax-m3.1-flash|--model=MiniMax-M3.1-Flash|--model=minimax-m3|\
     --model=MiniMax-M3|--model=minimax-m2.7|--model=MiniMax-M2.7)
       FAILOVER_MODEL="${_fa#--model=}"
       ;;
@@ -273,9 +274,13 @@ if [[ -n "$FAILOVER_MODEL" ]]; then
     opencode)        ASSISTANT="opencode" ;;
     antigravity)     ASSISTANT="antigravity" ;;
     openclaw)        ASSISTANT="openclaw" ;;
-    minimax|MiniMax-M3|minimax-m3|MiniMax-M2.7|minimax-m2.7)
+    minimax|MiniMax-M3.1-Flash|minimax-m3.1-flash|MiniMax-M3|minimax-m3|MiniMax-M2.7|minimax-m2.7)
       case "$FAILOVER_MODEL" in
-        minimax|MiniMax-M3|minimax-m3)
+        minimax|MiniMax-M3.1-Flash|minimax-m3.1-flash)
+          _MINIMAX_MODEL="MiniMax-M3.1-Flash"
+          _MINIMAX_CONTEXT_WINDOW=1000000
+          ;;
+        MiniMax-M3|minimax-m3)
           _MINIMAX_MODEL="MiniMax-M3"
           _MINIMAX_CONTEXT_WINDOW=1000000
           ;;
